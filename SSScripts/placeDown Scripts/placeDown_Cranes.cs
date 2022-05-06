@@ -34,6 +34,9 @@ public class placeDown_Cranes : MonoBehaviour
 
     public GameObject Relic_3;
 
+    public AudioClip placedownsound;
+    AudioSource audioSource;
+
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +51,8 @@ public class placeDown_Cranes : MonoBehaviour
         pisc.SetActive(false);
 
         Relic_3.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
+
 
     }
 
@@ -92,6 +97,10 @@ public class placeDown_Cranes : MonoBehaviour
             
             Relic_3.SetActive(true);
             //Add sparkling sound effect
+            audioSource.PlayOneShot(placedownsound);
+            enabled = false;
+
+
 
         }
     }

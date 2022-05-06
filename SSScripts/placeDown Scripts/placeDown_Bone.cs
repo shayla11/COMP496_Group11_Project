@@ -10,12 +10,16 @@ public class placeDown_Bone : MonoBehaviour
     public Transform final_Bone_Dest;
     public GameObject Bone_Img;
     public GameObject nameplate;
+    public AudioClip pickupsound;
+    AudioSource audioSource;
+    public GameObject standinbone;
 
 
 
     void Start(){
-
-    nameplate.GetComponent<Animator>().enabled = false;
+        nameplate.GetComponent<Animator>().enabled = false;
+        audioSource = GetComponent<AudioSource>();
+        standinbone.SetActive(false);
 
     }
 
@@ -29,6 +33,9 @@ public class placeDown_Bone : MonoBehaviour
         if (Bone_PickUp_Script.finalpos_Bone){
             //Release Relic and play a sound
             nameplate.GetComponent<Animator>().enabled = true;
+            audioSource.PlayOneShot(pickupsound);
+            standinbone.SetActive(true);
+            enabled = false;
 
         }
 

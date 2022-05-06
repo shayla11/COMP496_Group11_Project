@@ -7,6 +7,7 @@ using UnityEngine;
 public class inventory : MonoBehaviour
 {
     public GameObject Inventory;
+    public GameObject Notebook;
     
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,7 @@ public class inventory : MonoBehaviour
     void Update()
     {
         //Open Inventory on 'E' key press. Will close if pressed again
-        if (Input.GetKeyDown(KeyCode.E) && !(Inventory.activeInHierarchy)){
+        if (Input.GetKeyDown(KeyCode.E) && !(Inventory.activeInHierarchy) && !(Notebook.activeInHierarchy)){
             Inventory.SetActive(true);
 
             //Player Movement is Restricted

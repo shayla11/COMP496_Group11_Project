@@ -10,6 +10,9 @@ public class placeDown_Marbles : MonoBehaviour
         public Transform final_Marble_2_Dest;
         public Transform final_Marble_3_Dest;
 
+        public AudioClip pickupsound;
+        AudioSource audioSource;
+
         //ImagesButtons
         public GameObject Marble_1_Img;
         public GameObject Marble_2_Img;
@@ -24,6 +27,8 @@ public class placeDown_Marbles : MonoBehaviour
     void Start()
     {
         Marble_Clue_Decoy.GetComponent<Animator>().enabled = false;
+        audioSource = GetComponent<AudioSource>();
+
 
     }
 
@@ -44,8 +49,10 @@ public class placeDown_Marbles : MonoBehaviour
         //If all the marblels have been placed on the podium, then release the next clue
         if (Marble_1_PickUp_Script.finalpos_Marble_1 & Marble_2_PickUp_Script.finalpos_Marble_2 & Marble_3_PickUp_Script.finalpos_Marble_3){
             Marble_Clue_Decoy.GetComponent<Animator>().enabled = true; 
-
             Marble_Clue_PickUp_Script.Marble_Puzzle_Completed = true;
+            audioSource.PlayOneShot(pickupsound);
+            enabled = false;
+
         }
 
     }

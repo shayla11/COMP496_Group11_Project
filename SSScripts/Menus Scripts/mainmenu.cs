@@ -10,7 +10,7 @@ public class mainmenu : MonoBehaviour
 {
 
     public void PlayGame(){
-        SceneManager.LoadScene("museumbase"); //Use 'ShaylaTestEnv' to test puzzles and clues
+        SceneManager.LoadScene("KaylaRobinson_MuseumScene_March27"); //Use 'ShaylaTestEnv' to test puzzles and clues
     }
 
     public void QuitGame(){

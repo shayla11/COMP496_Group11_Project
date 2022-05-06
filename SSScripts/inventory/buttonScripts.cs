@@ -28,6 +28,16 @@ public class buttonScripts : MonoBehaviour
     public GameObject Bone;
     public GameObject Relic_2;
 
+    //Cranes
+    public GameObject Red_Crane;
+    public GameObject Orange_Crane;
+    public GameObject Yellow_Crane;
+    public GameObject Green_Crane;
+    public GameObject LightBlue_Crane;
+    public GameObject Blue_Crane;
+    public GameObject Purple_Crane;
+    public GameObject Pink_Crane;
+    public GameObject Relic_3;
 
 
 
@@ -41,6 +51,18 @@ public class buttonScripts : MonoBehaviour
     public GameObject Bone_Img;
     public GameObject Relic_2_Img;
 
+    //Crane Buttons
+    public GameObject Red_Crane_Img;
+    public GameObject Orange_Crane_Img;
+    public GameObject Yellow_Crane_Img;
+    public GameObject Green_Crane_Img;
+    public GameObject LightBlue_Crane_Img;
+    public GameObject Blue_Crane_Img;
+    public GameObject Purple_Crane_Img;
+    public GameObject Pink_Crane_Img;
+    public GameObject Relic_3_Img;
+
+
 
 
     public void Start(){
@@ -52,6 +74,17 @@ public class buttonScripts : MonoBehaviour
         Battery_Img.SetActive(false);
         Bone_Img.SetActive(false);
         Relic_2_Img.SetActive(false);
+
+        Red_Crane_Img.SetActive(false);
+        Orange_Crane_Img.SetActive(false);
+        Yellow_Crane_Img.SetActive(false);
+        Green_Crane_Img.SetActive(false);
+        LightBlue_Crane_Img.SetActive(false);
+        Blue_Crane_Img.SetActive(false);
+        Purple_Crane_Img.SetActive(false);
+        Pink_Crane_Img.SetActive(false);
+        Relic_3_Img.SetActive(false);
+
 
 
 
@@ -65,6 +98,15 @@ public class buttonScripts : MonoBehaviour
         GameObject Bone = GameObject.Find("Bone");
         GameObject Relic_2 = GameObject.Find("Relic_2");
 
+        GameObject Red_Crane = GameObject.Find("PaperCrane_RED");
+        GameObject Orange_Crane = GameObject.Find("PaperCrane_ORANGE");
+        GameObject Yellow_Crane = GameObject.Find("PaperCrane_YELLOW");
+        GameObject Green_Crane = GameObject.Find("PaperCrane_GREEN");
+        GameObject LightBlue_Crane = GameObject.Find("PaperCrane_lightBLUE");
+        GameObject Blue_Crane = GameObject.Find("PaperCrane_BLUE");
+        GameObject Purple_Crane = GameObject.Find("PaperCrane_PURPLE");
+        GameObject Pink_Crane = GameObject.Find("PaperCrane_PINK");
+        GameObject Relic_3 = GameObject.Find("Relic_3");
 
 
     }
@@ -128,9 +170,18 @@ public class buttonScripts : MonoBehaviour
         pickUp_Bone Bone_PickUp_Script = Bone.GetComponent<pickUp_Bone>();
         pickUp_Relic_2 Relic_2_PickUp_Script = Relic_2.GetComponent<pickUp_Relic_2>();
 
+        pickUp_Red_Crane Red_Crane_PickUp_Script = Red_Crane.GetComponent<pickUp_Red_Crane>();
+        pickUp_Orange_Crane Orange_Crane_PickUp_Script = Orange_Crane.GetComponent<pickUp_Orange_Crane>();
+        pickUp_Yellow_Crane Yellow_Crane_PickUp_Script = Yellow_Crane.GetComponent<pickUp_Yellow_Crane>();
+        pickUp_Green_Crane Green_Crane_PickUp_Script = Green_Crane.GetComponent<pickUp_Green_Crane>();
+        pickUp_LightBlue_Crane LightBlue_Crane_PickUp_Script = LightBlue_Crane.GetComponent<pickUp_LightBlue_Crane>();
+        pickUp_DarkBlue_Crane Blue_Crane_PickUp_Script = Blue_Crane.GetComponent<pickUp_DarkBlue_Crane>();
+        pickUp_Purple_Crane Purple_Crane_PickUp_Script = Purple_Crane.GetComponent<pickUp_Purple_Crane>();
+        pickUp_Pink_Crane Pink_Crane_PickUp_Script = Pink_Crane.GetComponent<pickUp_Pink_Crane>();
+        pickUp_Relic_3 Relic_3_PickUp_Script = Relic_3.GetComponent<pickUp_Relic_3>();
 
 
-        
+
         if (Marble_1_PickUp_Script.viewing_Marble_1){
             //Maybe find set invisible, and not not active
             Marble_1.transform.position = hideDest.position;
@@ -174,6 +225,42 @@ public class buttonScripts : MonoBehaviour
             Relic_2_Img.SetActive(true);
             Relic_2_PickUp_Script.viewing_Relic_2 = false;
 
+        } if (Red_Crane_PickUp_Script.viewing_Red_Crane){
+            Red_Crane.transform.position = hideDest.position;            
+            Red_Crane_Img.SetActive(true);
+            Red_Crane_PickUp_Script.viewing_Red_Crane = false;
+        } if (Orange_Crane_PickUp_Script.viewing_Orange_Crane){
+            Orange_Crane.transform.position = hideDest.position;            
+            Orange_Crane_Img.SetActive(true);
+            Orange_Crane_PickUp_Script.viewing_Orange_Crane = false;
+        } if (Yellow_Crane_PickUp_Script.viewing_Yellow_Crane){
+            Yellow_Crane.transform.position = hideDest.position;            
+            Yellow_Crane_Img.SetActive(true);
+            Yellow_Crane_PickUp_Script.viewing_Yellow_Crane = false;
+        } if (Green_Crane_PickUp_Script.viewing_Green_Crane){
+            Green_Crane.transform.position = hideDest.position;            
+            Green_Crane_Img.SetActive(true);
+            Green_Crane_PickUp_Script.viewing_Green_Crane = false;
+        } if (LightBlue_Crane_PickUp_Script.viewing_lBlue_Crane){
+            LightBlue_Crane.transform.position = hideDest.position;            
+            LightBlue_Crane_Img.SetActive(true);
+            LightBlue_Crane_PickUp_Script.viewing_lBlue_Crane = false;
+        } if (Blue_Crane_PickUp_Script.viewing_dBlue_Crane){
+            Blue_Crane.transform.position = hideDest.position;            
+            Blue_Crane_Img.SetActive(true);
+            Blue_Crane_PickUp_Script.viewing_dBlue_Crane = false;
+        } if (Purple_Crane_PickUp_Script.viewing_Purple_Crane){
+            Purple_Crane.transform.position = hideDest.position;            
+            Purple_Crane_Img.SetActive(true);
+            Purple_Crane_PickUp_Script.viewing_Purple_Crane = false;
+        } if (Pink_Crane_PickUp_Script.viewing_Pink_Crane){
+            Pink_Crane.transform.position = hideDest.position;            
+            Pink_Crane_Img.SetActive(true);
+            Pink_Crane_PickUp_Script.viewing_Pink_Crane = false;
+        } if (Relic_3_PickUp_Script.viewing_Relic_3){
+            Relic_3.transform.position = hideDest.position;            
+            Relic_3_Img.SetActive(true);
+            Relic_3_PickUp_Script.viewing_Relic_3 = false;
         }
 
     }
@@ -189,6 +276,16 @@ public class buttonScripts : MonoBehaviour
         pickUp_Battery Battery_PickUp_Script = Battery.GetComponent<pickUp_Battery>();
         pickUp_Bone Bone_PickUp_Script = Bone.GetComponent<pickUp_Bone>();
         pickUp_Relic_2 Relic_2_PickUp_Script = Relic_2.GetComponent<pickUp_Relic_2>();
+
+        pickUp_Red_Crane Red_Crane_PickUp_Script = Red_Crane.GetComponent<pickUp_Red_Crane>();
+        pickUp_Orange_Crane Orange_Crane_PickUp_Script = Orange_Crane.GetComponent<pickUp_Orange_Crane>();
+        pickUp_Yellow_Crane Yellow_Crane_PickUp_Script = Yellow_Crane.GetComponent<pickUp_Yellow_Crane>();
+        pickUp_Green_Crane Green_Crane_PickUp_Script = Green_Crane.GetComponent<pickUp_Green_Crane>();
+        pickUp_LightBlue_Crane LightBlue_Crane_PickUp_Script = LightBlue_Crane.GetComponent<pickUp_LightBlue_Crane>();
+        pickUp_DarkBlue_Crane Blue_Crane_PickUp_Script = Blue_Crane.GetComponent<pickUp_DarkBlue_Crane>();
+        pickUp_Purple_Crane Purple_Crane_PickUp_Script = Purple_Crane.GetComponent<pickUp_Purple_Crane>();
+        pickUp_Pink_Crane Pink_Crane_PickUp_Script = Pink_Crane.GetComponent<pickUp_Pink_Crane>();
+        pickUp_Relic_3 Relic_3_PickUp_Script = Relic_3.GetComponent<pickUp_Relic_3>();
 
 
 
@@ -225,6 +322,42 @@ public class buttonScripts : MonoBehaviour
             Relic_2.transform.position = Relic_2_PickUp_Script.itemOPosition;
             Relic_2.transform.parent = Relic_2_PickUp_Script.parentOPosition;
             Relic_2_PickUp_Script.viewing_Relic_2 = false;
+        } if (Red_Crane_PickUp_Script.viewing_Red_Crane){
+            Red_Crane.transform.position = Red_Crane_PickUp_Script.itemOPosition;
+            Red_Crane.transform.parent = Red_Crane_PickUp_Script.parentOPosition;
+            Red_Crane_PickUp_Script.viewing_Red_Crane = false;
+        } if (Orange_Crane_PickUp_Script.viewing_Orange_Crane){
+            Orange_Crane.transform.position = Orange_Crane_PickUp_Script.itemOPosition;
+            Orange_Crane.transform.parent = Orange_Crane_PickUp_Script.parentOPosition;
+            Orange_Crane_PickUp_Script.viewing_Orange_Crane = false;
+        } if (Yellow_Crane_PickUp_Script.viewing_Yellow_Crane){
+            Yellow_Crane.transform.position = Yellow_Crane_PickUp_Script.itemOPosition;
+            Yellow_Crane.transform.parent = Yellow_Crane_PickUp_Script.parentOPosition;
+            Yellow_Crane_PickUp_Script.viewing_Yellow_Crane = false;
+        } if (Green_Crane_PickUp_Script.viewing_Green_Crane){
+            Green_Crane.transform.position = Green_Crane_PickUp_Script.itemOPosition;
+            Green_Crane.transform.parent = Green_Crane_PickUp_Script.parentOPosition;
+            Green_Crane_PickUp_Script.viewing_Green_Crane = false;
+        } if (LightBlue_Crane_PickUp_Script.viewing_lBlue_Crane){
+            LightBlue_Crane.transform.position = LightBlue_Crane_PickUp_Script.itemOPosition;
+            LightBlue_Crane.transform.parent = LightBlue_Crane_PickUp_Script.parentOPosition;
+            LightBlue_Crane_PickUp_Script.viewing_lBlue_Crane = false;
+        } if (Blue_Crane_PickUp_Script.viewing_dBlue_Crane){
+            Blue_Crane.transform.position = Blue_Crane_PickUp_Script.itemOPosition;
+            Blue_Crane.transform.parent = Blue_Crane_PickUp_Script.parentOPosition;
+            Blue_Crane_PickUp_Script.viewing_dBlue_Crane = false;
+        } if (Purple_Crane_PickUp_Script.viewing_Purple_Crane){
+            Purple_Crane.transform.position = Purple_Crane_PickUp_Script.itemOPosition;
+            Purple_Crane.transform.parent = Purple_Crane_PickUp_Script.parentOPosition;
+            Purple_Crane_PickUp_Script.viewing_Purple_Crane = false;
+        } if (Pink_Crane_PickUp_Script.viewing_Pink_Crane){
+            Pink_Crane.transform.position = Pink_Crane_PickUp_Script.itemOPosition;
+            Pink_Crane.transform.parent = Pink_Crane_PickUp_Script.parentOPosition;
+            Pink_Crane_PickUp_Script.viewing_Pink_Crane = false;
+        } if (Relic_3_PickUp_Script.viewing_Relic_3){
+            Relic_3.transform.position = Relic_3_PickUp_Script.itemOPosition;
+            Relic_3.transform.parent = Relic_3_PickUp_Script.parentOPosition;
+            Relic_3_PickUp_Script.viewing_Relic_3 = false;
         }
     }
 

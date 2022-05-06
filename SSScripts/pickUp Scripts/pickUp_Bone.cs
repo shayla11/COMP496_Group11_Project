@@ -17,6 +17,9 @@ public class pickUp_Bone : MonoBehaviour
     public Transform parentOPosition;
     public GameObject Inventory;
 
+    public AudioClip placedownsound;
+    AudioSource audioSource;
+
     //Marble
     public GameObject Bone;
     public bool holding_Bone;
@@ -27,6 +30,8 @@ public class pickUp_Bone : MonoBehaviour
         holding_Bone = false;
         viewing_Bone = false;
         finalpos_Bone = false;
+        audioSource = GetComponent<AudioSource>();
+
     }
     
      void OnMouseDown() 
@@ -56,6 +61,8 @@ public class pickUp_Bone : MonoBehaviour
         Bone.transform.parent = GameObject.Find("ItemDestination").transform;
         itemDescription.text = ("You've found a Bone!\n Maybe a golden dog deserves a golden treat!");
         viewing_Bone = true;
+        audioSource.PlayOneShot(placedownsound);
+
     }
 
         public void HoldItem(){

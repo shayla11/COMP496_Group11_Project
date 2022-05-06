@@ -18,6 +18,9 @@ public class pickUp_Marble_Clue : MonoBehaviour
     public Transform parentOPosition;
     public GameObject Inventory;
 
+    public AudioClip pickupsound;
+    AudioSource audioSource;
+
     //Marble
     public GameObject Marble_Clue;
     public GameObject Marble_Clue_Decoy;
@@ -37,12 +40,10 @@ public class pickUp_Marble_Clue : MonoBehaviour
         backpackButton.SetActive(false);
         putbackButton.SetActive(false);
         textBackground.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
 
     }
 
-    void Update(){
-
-    }
     
     void OnMouseDown() 
     {
@@ -78,6 +79,8 @@ public class pickUp_Marble_Clue : MonoBehaviour
             Marble_Clue.transform.parent = GameObject.Find("ItemDestination").transform;
             itemDescription.text = ("You've found a Clue! \n This looks like a code to a Ceasar Cipher, maybe I can use this somehwere else in the museum!");
             viewing_Marble_Clue = true;
+            audioSource.PlayOneShot(pickupsound);
+
         }
     }
 

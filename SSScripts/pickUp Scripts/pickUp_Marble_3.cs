@@ -15,6 +15,9 @@ public class pickUp_Marble_3 : MonoBehaviour
     public Transform parentOPosition;
     public GameObject Inventory;
 
+    public AudioClip pickupsound;
+    AudioSource audioSource;
+
     //Marble
     public GameObject Marble_3;
     public bool holding_Marble_3;
@@ -26,6 +29,8 @@ public class pickUp_Marble_3 : MonoBehaviour
         holding_Marble_3 = false;
         viewing_Marble_3 = false;
         finalpos_Marble_3 = false;
+        audioSource = GetComponent<AudioSource>();
+
 
     }
     
@@ -56,6 +61,8 @@ public class pickUp_Marble_3 : MonoBehaviour
         Marble_3.transform.parent = GameObject.Find("ItemDestination").transform;
         itemDescription.text = ("You've found a Green Marble! \n I wonder where this goes..");
         viewing_Marble_3 = true;
+        audioSource.PlayOneShot(pickupsound);
+
     }
 
         public void HoldItem(){

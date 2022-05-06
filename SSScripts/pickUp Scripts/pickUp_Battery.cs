@@ -18,6 +18,9 @@ public class pickUp_Battery : MonoBehaviour
     public Transform parentOPosition;
     public GameObject Inventory;
 
+    public AudioClip placedownsound;
+    AudioSource audioSource;
+
     //Marble
     public GameObject Battery;
     public bool holding_Battery;
@@ -28,6 +31,8 @@ public class pickUp_Battery : MonoBehaviour
         holding_Battery = false;
         viewing_Battery = false;
         finalpos_Battery = false;
+        audioSource = GetComponent<AudioSource>();
+
     }
     
      void OnMouseDown() 
@@ -57,6 +62,8 @@ public class pickUp_Battery : MonoBehaviour
         Battery.transform.parent = GameObject.Find("ItemDestination").transform;
         itemDescription.text = ("You've found a Battery!\n Maybe I can use this to turn something on");
         viewing_Battery = true;
+        audioSource.PlayOneShot(placedownsound);
+
     }
 
         public void HoldItem(){

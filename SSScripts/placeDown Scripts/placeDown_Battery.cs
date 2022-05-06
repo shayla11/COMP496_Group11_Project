@@ -11,11 +11,15 @@ public class placeDown_Battery : MonoBehaviour
 
     public Light UV_Light;
     public GameObject Secret_Message;
+    public AudioClip pickupsound;
+    AudioSource audioSource;
 
 
     void Start(){
         UV_Light.GetComponent<Light>().enabled = false;
         Secret_Message.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
+
     }
 
     // Update is called once per frame
@@ -29,6 +33,8 @@ public class placeDown_Battery : MonoBehaviour
             // Turn on UV light and reveal secret Message
             UV_Light.GetComponent<Light>().enabled = true;
             Secret_Message.SetActive(true);
+            audioSource.PlayOneShot(pickupsound);
+
 
         } if (!Battery_PickUp_Script.finalpos_Battery){
             UV_Light.GetComponent<Light>().enabled = false;

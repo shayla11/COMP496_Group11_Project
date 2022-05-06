@@ -18,6 +18,9 @@ public class pickUp_Relic_2 : MonoBehaviour
     public Transform parentOPosition;
     public GameObject Inventory;
 
+    public AudioClip pickupsound;
+    AudioSource audioSource;
+
     //Marble
     public GameObject Relic_2;
     public bool holding_Relic_2;
@@ -31,6 +34,8 @@ public class pickUp_Relic_2 : MonoBehaviour
         viewing_Relic_2 = false;
         finalpos_Relic_2 = false;
         obtain_relic_2 = false;
+        audioSource = GetComponent<AudioSource>();
+
 
     }
     
@@ -62,6 +67,8 @@ public class pickUp_Relic_2 : MonoBehaviour
         itemDescription.text = ("You've found a Relic! \n Nice!");
         viewing_Relic_2 = true;
         obtain_relic_2 = true;
+        audioSource.PlayOneShot(pickupsound);
+
     }
 
         public void HoldItem(){
