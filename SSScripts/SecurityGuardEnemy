@@ -1,0 +1,223 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class AIEnemyControls : MonoBehaviour
+{
+ 
+    public GameObject player;
+    public AudioClip[] footsounds;
+    public AudioClip[] dangerRun;
+    public AudioSource sound;
+    public AudioSource dangerSound;
+
+    public float viewRadius = 15;
+    public float viewAngle = 90;
+    public LayerMask playerMask;
+    public LayerMask obstacleMask;
+
+    Vector3 playerLastPosition = Vector3.zero;
+    Vector3 m_PlayerPosition;
+
+
+    // public static Vector3 insideUnitSphere;
+    public float e_wanderRadius;
+    public float e_wanderTimer;
+    private Transform target;
+    public NavMeshAgent agent;
+    private Animator animator;
+    private float timer;
+
+
+    public bool enemyRoamState = true;
+
+   
+    public bool s_playerCaptured;
+    public bool s_playerInRange;
+    public bool s_doorInFront;
+    public bool s_chasePlayer;
+    public bool s_playerNoticed;
+    public bool roamStateCheck;
+
+    //public Transform[] waypoints;
+    //int waypointIndex;
+
+    void OnEnable()
+    {
+        timer = e_wanderTimer;
+        agent = GetComponent<NavMeshAgent>();
+        // sound = GetComponent<AudioSource>();
+        anim = GetComponent<Animator>();
+        agent.isStopped = false;
+        s_playerNoticed = false;
+        s_playerCaptured = false;
+        s_playerInRange = false;
+        s_chasePlayer = false;
+        s_doorInFront = false;
+
+    }
+
+
+    // Start is called before the first frame update
+    /*void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
+    }
+    */
+
+    // Update is called once per frame
+    void Update()
+    {
+        EnviromentViewCheck();
+
+        // Debug.DrawLine(enemyEyes.position, player.transform.position, Color.blue);
+        timer += Time.deltaTime;
+        if (timer >= e_wanderTimer)
+        {
+            //e_wanderRadius = 80f;
+            if (!enemyRoamState)
+            {
+                animator.SetBool("playerNoticed", true);
+                animator.SetBool("enemyRoamCheck", false);
+                EnemyChaseHunt();  // enemy chase function
+            }
+            else if (s_PlayerInRange && enemyRoamState)
+            {
+                animator.SetBool("enemyRoamCheck", true);
+                Vector3 newPos = RandomNavSphere(transform.position, e_wanderRadius, -1);
+                agent.SetDestination(newPos);
+                timer = 0;
+                animator.SetBool("playerNoticed", false);
+            }
+            
+            // anim.SetFloat("velocity", agent.velocity.magnitude);
+
+            //Idle state (walking)
+            /*
+            */
+        }
+        /*if (state == "walk")
+        {
+            if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
+            {
+                state = "idle";
+            }
+
+        }
+        */ 
+        //nav.SetDestination(player.transform.position)
+
+    }
+
+    public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    {
+        Vector3 randDirection = UnityEngine.Random.insideUnitSphere * dist;
+        randDirection += origin;
+        NavMeshHit navHit;
+        NavMesh.SamplePosition (randDirection, out navHit, dist, layermask);
+        return navHit.position;
+    }
+
+    private void EnemyChaseHunt()
+    {
+        m_PlayerNear = false;
+        playerLastPosition = Vector3.zero;
+
+        if (!s_playerNoticed)
+        {
+            animator.SetBool("enemyRoamCheck", true);
+            navMeshAgent.SetDestination(m_PlayerPosition);
+        }
+        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        {
+            if (m_WaitTime <= 0 && !m_CaughtPlayer && Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) >= 6f)
+            {
+                enemyRoamState = true;
+                m_PlayerNear = false;
+
+                Vector3 newPos = RandomNavSphere(transform.position, e_wanderRadius, -1);
+                agent.SetDestination(newPos);
+                timer = 0;
+            }
+            else
+            {
+                if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) >= 2.5f)
+                {
+                    Stop();
+                    m_WaitTime -= Time.deltaTime;
+                }
+            }
+        }
+    }
+    void EnviromentViewCheck()
+    {
+        Collider[] playerInRange = Physics.OverlapSphere(transform.position, viewRadius, playerMask);
+        for (int i = 0; i < playerInRange.Length; i++)
+        {
+            Transform player = playerInRange[i].transform;
+            Vector3 dirToPlayer = (player.position - transform.position).normalized;
+            // if player is near 
+            if (Vector3.Angle(transform.forward, dirToPlayer) < viewAngle / 2)
+            {
+                float dstToPlayer = Vector3.Distance(transform.position, player.position);
+
+                if (!Physics.Raycast(transform.position, dirToPlayer, dstToPlayer, obstacleMask))
+                {
+                    s_PlayerInRange = true;
+                    s_playerNoticed = true;
+                    enemyRoamState = false;
+                }
+                else
+                {
+                    s_PlayerInRange = false;
+                }
+            }
+            if (Vector3.Distance(transform.position, player.position) > viewRadius)
+            {
+                s_playerInRange = false;
+            }
+            if (s_playerInRange)
+            {
+                s_playerPosition = player.transform.position;
+            }
+        }
+    }
+
+
+    // check to see if player is within enemy's sight/range of view 
+    /*
+    public void checkSightSeen()
+    {
+        RaycastHit rayHit;
+        if (Physics.Linecast(enemyEyes.position, player.transform.position, out rayHit))
+        {
+            if(rayHit.collider.gameObject.name == "player")
+            {
+                if(state != "caught")
+                {
+                    state = "chase";
+                    agent.speed = 8.5f;
+                    anim.speed = 8.5f;
+                    angryNotice.pitch = 1.2f;
+                    angryNotice.Play();
+                }
+            }
+        }
+    }
+    */
+
+    /*
+    public void enemyFootSteps(int _numFootSteps)
+     {
+         sound.clip = footsounds[_numFootSteps];
+         sound.Play();
+     }
+    */
+    /* private void StopPatrol()
+    {
+        animator.SetBool("playerNoticed", true);
+    }
+    */
+}
