@@ -1,0 +1,183 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+
+public class AIEnemyControls : MonoBehaviour
+{
+
+	public NavMeshAgent navAgent;
+	public Transform player;
+	private Animator animator;
+	// public AudioClip[] footsounds;
+	// public AudioClip[] dangerRun;
+	// public AudioSource sound;
+	// public AudioSource dangerSound;
+
+	public LayerMask groundPathMask;
+	public LayerMask playerMask;
+	public LayerMask obstacleMask;
+
+	// timer for in between enemy patrol checks to choose new point path
+	public float e_wanderTimer;
+	public float e_wanderRadius;
+	public float e_chaseTimer;
+	private float timer;
+	private float chaseTimer;
+
+	// collision GetCollision
+
+	// Enemy Patroling
+	// public Vector3 patrolPathPoint;     // checks walk points
+	// bool patrolPathPSet;            // checks if the enemy path points are set
+	// public float patrolPointRange;      // controls the patrol path points range 
+
+	// Chasing (no variables)
+
+	//Catch Player, start game over
+	public float timeBetweenChase;
+	public bool catchedPlayer;
+	public bool startOver;
+
+	// States 
+	public float e_SightRange;
+	public float e_CatchRange;
+	public bool playerCaught;
+	public bool playerInSightRange;
+	public bool playerInCatchRange;
+
+	private void Awake()
+	{
+		timer = e_wanderTimer;
+		player = GameObject.Find("Player").transform;
+		navAgent = GetComponent<NavMeshAgent>();
+		animator = GetComponent<Animator>();
+
+	}
+
+	void Update()
+	{
+		// Checks if the player is in the sight or chase range of enemy security guard
+		playerInSightRange = Physics.CheckSphere(transform.position, e_SightRange, playerMask);
+		playerInCatchRange = Physics.CheckSphere(transform.position, e_CatchRange, playerMask);
+
+		if (!playerInSightRange && !playerInCatchRange)
+		{
+			EnemyPatroling(); // enemy patrol if player not in sight or catch range
+		}
+		if (playerInSightRange && !playerInCatchRange)
+		{
+			// make enemy face player and set off animations before hunt
+			// Triggers enemy animation to react then angry gesture
+			transform.LookAt(player);
+			animator.SetBool("playerNoticed", true);
+			animator.SetBool("enemyRoamCheck", false);
+			// enemy chase player if in sight but not in catch range
+			EnemyChasePlayer();
+		}
+		if (playerInCatchRange && playerInSightRange)
+		{
+			EnemyCatchPlayer();  // enemy catch player, player in sight and in catch range
+		}
+	}
+
+	public void EnemyChasePlayer()
+	{
+		// Triggers enemy animation to then run/chase player
+		// Sets enemy AI position to player position
+		animator.SetBool("playerNoticed", true);
+		animator.SetBool("viewPlayerInRange", true);
+		animator.SetBool("chasePlayer", true);
+		// dangerRun.Play();
+		navAgent.SetDestination(player.position);
+	}
+
+	void EnemyCatchPlayer()
+	{
+		chaseTimer = e_chaseTimer;
+		// timer for enemy to catch player 
+		// if timer runs out player survives and enemy goes back to patroling
+		// if player caught, player must start game run (game over esstentially)
+
+
+		chaseTimer += Time.deltaTime;
+
+		if (chaseTimer >= e_chaseTimer)
+		{
+			// OnTriggerEnter3D(player);
+
+			if (playerCaught)
+			{
+				animator.SetBool("playerNoticed", true);
+				animator.SetBool("chasePlayer", true);
+				animator.SetBool("playerCaptured", true);
+				Time.timeScale = 1;
+			}
+			if (chaseTimer <= e_chaseTimer)
+			{
+				if (!playerCaught)
+				{
+					animator.SetBool("playerNoticed", true);
+					animator.SetBool("chasePlayer", true);
+					animator.SetBool("playerCaptured", false);
+					animator.SetBool("viewPlayerInRange", false);
+					chaseTimer = 0;
+					EnemyPatroling();
+				}
+			}
+		}
+
+	}
+
+
+	public void EnemyPatroling()
+	{
+		// If path position reached (enemy AI footsteps equivalence), finds another point
+		// sets timer for the enemy to look for new path point
+		// then sets off animations
+		timer += Time.deltaTime;
+		//e_wanderRadius = 80f;
+		if (timer >= e_wanderTimer)
+		{
+			Vector3 newPos = RandomNavSphere(transform.position, e_wanderRadius, -1);
+			navAgent.SetDestination(newPos);
+			timer = 0;
+			animator.SetBool("enemyRoamCheck", true);
+
+		}
+		else
+		{
+			animator.SetBool("enemyRoam", true);
+		}
+	}
+
+	// sets sphere for enemy AI to roam navigate
+	public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+	{
+		Vector3 randDirection = UnityEngine.Random.insideUnitSphere * dist;
+		randDirection += origin;
+		NavMeshHit navHit;
+		NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+		return navHit.position;
+	}
+}
+
+	
+	/* private void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.CompareTag == "Player")
+		{
+			playerCaught = true;
+		}
+	}
+	*/
+
+	/*
+	public void enemyFootSteps(int _numFootSteps)
+		 {
+			 sound.clip = footsounds[_numFootSteps];
+			 sound.Play();
+		 }
+	*/
+
